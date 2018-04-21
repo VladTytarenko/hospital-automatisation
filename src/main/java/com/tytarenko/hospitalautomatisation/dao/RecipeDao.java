@@ -16,11 +16,13 @@ public class RecipeDao implements DaoInteface<Recipe> {
 
     @Override
     public List<Recipe> get(long patientId) {
-        return null;
+        return null;//jdbcTemplated.queryForObject("SELECT * FROM recipe ");
     }
 
     @Override
     public void add(Recipe object) {
 
     }
+
+
 }
