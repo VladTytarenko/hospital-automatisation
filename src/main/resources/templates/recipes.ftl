@@ -6,9 +6,9 @@
 </head>
 <body>
 
- <#list recommendation-list as recommendation>
-     ${recommendation.recommendation}
- </#list>
+    <#list recipe-list as recipe>
+        ${recipe.medicament}
+    </#list>
 
 </body>
 </html>

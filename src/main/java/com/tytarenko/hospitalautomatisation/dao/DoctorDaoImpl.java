@@ -8,6 +8,7 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+
 @Repository
 public class DoctorDaoImpl implements DoctorDao {
 
@@ -16,9 +17,66 @@ public class DoctorDaoImpl implements DoctorDao {
 
     @Override
     public Doctor getByPassport(String passport) {
-        jdbcTemplate.queryForObject("SELECT * FROM doctor WHERE passport = :passport",
+        return jdbcTemplate.queryForObject("SELECT DP.passport, DP.surname, DP.name, DP.patronymic, D.birthdate, D.specialization," +
+                        " D.experience, D.position, D.degree" +
+                        " FROM" +
+                        " (SELECT * FROM doctor_passport WHERE passport = :passport) AS DP" +
+                        " JOIN" +
+                        " doctor AS D" +
+                        " ON" +
+                        " D.passport = DP.passport",
                 new MapSqlParameterSource().addValue("passport", passport),
                 new DoctorMapper());
-        return null;
+    }
+
+    @Override
+    public void addDoctor(Doctor doctor) {
+        jdbcTemplate.update("INSERT INTO doctor_passport(passport, surname, name, patronymic) VALUES (:passport," +
+                        " :surname, :name)",
+                new MapSqlParameterSource()
+        .addValue("passport", doctor.getPassport())
+        .addValue("surname", doctor.getSurname())
+        .addValue("name", doctor.getName())
+        .addValue("patronymic", doctor.getPatronymic()));
+
+        jdbcTemplate.update("INSERT INTO doctor (passport, birthdate, experience, specialization, " +
+                "position, degree) VALUES (:passport, :birthdate, :experience, :specialization, " +
+                ":position, :degree)", new MapSqlParameterSource()
+        .addValue("passport", doctor.getPassport())
+                .addValue("birthdate", doctor.getBirthdate())
+                .addValue("experience", doctor.getExperience())
+                .addValue("specialization", doctor.getSpecialization())
+                .addValue("position", doctor.getPosition())
+                .addValue("degree", doctor.getDegree()));
+    }
+
+    @Override
+    public void updateDoctor(Doctor doctor, String passport) {
+        jdbcTemplate.update("UPDATE doctor_passport SET passport = :passport, surname = :surname, name = :name, patronymic = :patronymic WHERE" +
+                        " passport = :pass",
+                new MapSqlParameterSource()
+                        .addValue("passport", doctor.getPassport())
+                        .addValue("surname", doctor.getSurname())
+                        .addValue("name", doctor.getName())
+                        .addValue("patronymic", doctor.getPatronymic())
+        .addValue("pass", passport));
+
+        jdbcTemplate.update("UPDATE doctor SET passport = :passport, birthdate = :birthdate," +
+                " experience = :experience, specialization = :specialization, " +
+                "position = :position, degree = :degree WHERE passport = :pass", new MapSqlParameterSource()
+                .addValue("passport", doctor.getPassport())
+                .addValue("birthdate", doctor.getBirthdate())
+                .addValue("experience", doctor.getExperience())
+                .addValue("specialization", doctor.getSpecialization())
+                .addValue("position", doctor.getPosition())
+                .addValue("degree", doctor.getDegree())
+        .addValue("pass", passport));
+    }
+
+    @Override
+    public void deleteDoctorByPassport(String passport) {
+        jdbcTemplate.update("DELETE FROM doctor_passport WHERE passport = :passport",
+                new MapSqlParameterSource("passport", passport));
+
     }
 }

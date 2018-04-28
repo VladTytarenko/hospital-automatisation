@@ -8,8 +8,7 @@
 
     <#list patients_list as patient>
         <tr>
-            <td>${patient.id}</td>
-            <td><a href="/doctor/all_patients/${patient.id}">${patient.surname + " " + patient.name + " " + patient.patronymic}</td>
+            <td><a href="/doctor/${doctor.passport}/all_patients/${patient.passport}">${patient.surname + " " + patient.name + " " + patient.patronymic}</td>
         </tr>
     </#list>
 

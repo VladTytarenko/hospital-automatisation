@@ -4,12 +4,10 @@ import com.tytarenko.hospitalautomatisation.dao.interfaces.PatientDao;
 import com.tytarenko.hospitalautomatisation.entities.Patient;
 import com.tytarenko.hospitalautomatisation.services.interfaces.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 
-@Service
 public class PatientServiceImpl implements PatientService {
 
     @Autowired
@@ -21,8 +19,18 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
+    public Patient getPatientByPassport(String passport) {
+        return patientDao.getPatientByPassport(passport);
+    }
+
+    @Override
     public List<Patient> getAllPatient() {
         return patientDao.getAllPatient();
+    }
+
+    @Override
+    public List<Patient> getPatientsOfDoctor(String doctor) {
+        return patientDao.getPatientsOfDoctor(doctor);
     }
 
     @Override
@@ -31,12 +39,12 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
-    public void updatePatient(Patient patient) {
-        patientDao.updatePatient(patient);
+    public void updatePatient(Patient patient, String passport) {
+        patientDao.updatePatient(patient, passport);
     }
 
     @Override
-    public void deletePatientById(long id) {
-        patientDao.deletePatientById(id);
+    public void deletePatientByPassport(String passport) {
+        patientDao.deletePatientByPassport(passport);
     }
 }

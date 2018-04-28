@@ -29,53 +29,69 @@ public class DoctorController {
     @Autowired
     private ServiceInterface<Recipe> recipeService;
 
-    @GetMapping("/doctor/{passport}")
+    @GetMapping("/{passport}")
     public ModelAndView doctor(@PathVariable("passport") String passport) {
         Map<String, Object> model = new HashMap<>();
         model.put("doctor", doctorService.getByPassport(passport));
         return new ModelAndView("doctor", model);
     }
 
-    @GetMapping("/all-patients")
-    public ModelAndView getAllPatients() {
+    @GetMapping("/{passport}/all-patients")
+    public ModelAndView getAllPatients(@PathVariable("passport") String passport) {
         Map<String, Object> model = new HashMap<>();
-        model.put("patients-list", patientService.getAllPatient());
+        model.put("patients-list", patientService.getPatientsOfDoctor(passport));
+        model.put("doctor", doctorService.getByPassport(passport));
         return new ModelAndView("doctor-patient-list", model);
     }
 
-    @GetMapping("/all-patients/{id}")
-    public ModelAndView getPatientById(@PathVariable long id) {
+    @GetMapping("/{passport}/all-patients/{patient_passport}")
+    public ModelAndView getPatientById(@PathVariable("patient_passport") String passport,
+                                       @PathVariable("passport") String docPassport) {
         Map<String, Object> model = new HashMap<>();
-        model.put("patient", patientService.getPatientById(id));
+        model.put("patient", patientService.getPatientByPassport(passport));
+        model.put("doctor", doctorService.getByPassport(docPassport));
         return new ModelAndView("doctor-patient", model);
     }
 
-    @GetMapping("/all-patients/{id}/recommendations")
-    public ModelAndView getRecomendation(@PathVariable("id") long id) {
+    @GetMapping("/{passport}/all-patients/{patient_passport}/recommendations")
+    public ModelAndView getRecomendation(@PathVariable("patient_passport") String passport,
+                                         @PathVariable("passport") String docPassport) {
         Map<String, Object> model = new HashMap<>();
-        model.put("recommendations-list", recommendationService.get(id));
+        model.put("recommendations-list", recommendationService.get(passport));
+        model.put("doctor", doctorService.getByPassport(docPassport));
         return new ModelAndView("recommendations", model);
     }
 
-    @GetMapping("/all-patients/{id}/add_recommendation")
-    public ModelAndView addRecomendation(@PathVariable("id") long id) {
+    @GetMapping("/{passport}/all-patients/{patient_passport}/add_recommendation")
+    public ModelAndView addRecomendation(@PathVariable("passport") long id) {
         return new ModelAndView("add-recommendation");
     }
 
-    @PostMapping("/all-patients/{id}/add_recommendation")
+    @PostMapping("/{passport}/all-patients/{id}/add_recommendation")
     public ModelAndView addRecomendation(@ModelAttribute("recommendation") Recommendation recommendation) {
         recommendationService.add(recommendation);
         return new ModelAndView("redirect:/doctor/all-patients/{id}/recommendations");
     }
 
-    @GetMapping("/all-patients/{id}/add_recipe")
-    public ModelAndView addRecipe(@PathVariable("id") long id) {
+    @GetMapping("/{passport}/all-patients/{patient_passport}/recipe")
+    public ModelAndView getRecipe(@PathVariable("passport") String docPassport,
+                                  @PathVariable("patient_passport") String passport) {
         Map<String, Object> model = new HashMap<>();
-        model.put("id", id);
+        model.put("recipe-list", recipeService.get(passport));
+        model.put("doctor", doctorService.getByPassport(docPassport));
+        return new ModelAndView("recipies", model);
+    }
+
+    @GetMapping("/{passport}/all-patients/{patient_passport}/add_recipe")
+    public ModelAndView addRecipe(@PathVariable("passport") String docPassport,
+                                  @PathVariable("patient_passport") String passport) {
+        Map<String, Object> model = new HashMap<>();
+        model.put("doctor", doctorService.getByPassport(docPassport));
+        model.put("patient", patientService.getPatientByPassport(passport));
         return new ModelAndView("add-recipe", model);
     }
 
-    @PostMapping("/all-patients/{id}/add_recipe")
+    @PostMapping("/{passport}/all-patients/{patient_passport}/add_recipe")
     public ModelAndView addRecipe(@ModelAttribute("recipe") Recipe recipe) {
         recipeService.add(recipe);
         return new ModelAndView("redirect:/doctor/all-patients/{id}");

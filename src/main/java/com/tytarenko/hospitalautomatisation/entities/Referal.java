@@ -3,20 +3,20 @@ package com.tytarenko.hospitalautomatisation.entities;
 public class Referal {
 
     private long id;
-    private Patient patient;
-    private Doctor doctorFrom;
-    private Doctor docotrTo;
+    private String patient;
+    private String doctorFrom;
+    private String docotrTo;
 
     public Referal() {
     }
 
-    public Referal(Patient patient, Doctor doctorFrom, Doctor docotrTo) {
+    public Referal(String patient, String doctorFrom, String docotrTo) {
         this.patient = patient;
         this.doctorFrom = doctorFrom;
         this.docotrTo = docotrTo;
     }
 
-    public Referal(long id, Patient patient, Doctor doctorFrom, Doctor docotrTo) {
+    public Referal(long id, String patient, String doctorFrom, String docotrTo) {
         this.id = id;
         this.patient = patient;
         this.doctorFrom = doctorFrom;
@@ -31,27 +31,27 @@ public class Referal {
         this.id = id;
     }
 
-    public Patient getPatient() {
+    public String getPatient() {
         return patient;
     }
 
-    public void setPatient(Patient patient) {
+    public void setPatient(String patient) {
         this.patient = patient;
     }
 
-    public Doctor getDoctorFrom() {
+    public String getDoctorFrom() {
         return doctorFrom;
     }
 
-    public void setDoctorFrom(Doctor doctorFrom) {
+    public void setDoctorFrom(String doctorFrom) {
         this.doctorFrom = doctorFrom;
     }
 
-    public Doctor getDocotrTo() {
+    public String getDocotrTo() {
         return docotrTo;
     }
 
-    public void setDocotrTo(Doctor docotrTo) {
+    public void setDocotrTo(String docotrTo) {
         this.docotrTo = docotrTo;
     }
 }

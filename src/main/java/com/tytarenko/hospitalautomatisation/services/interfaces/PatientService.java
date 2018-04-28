@@ -8,9 +8,11 @@ import java.util.List;
 public interface PatientService {
 
     Patient getPatientById(long id);
+    Patient getPatientByPassport(String passport);
     List<Patient> getAllPatient();
+    List<Patient> getPatientsOfDoctor(String doctor);
     void insetNewPatient(Patient patient);
-    void updatePatient(Patient patient);
-    void deletePatientById(long id);
+    void updatePatient(Patient patient, String passport);
+    void deletePatientByPassport(String passport);
 
 }

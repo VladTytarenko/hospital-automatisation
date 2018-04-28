@@ -4,13 +4,19 @@ package com.tytarenko.hospitalautomatisation.entities;
 public class Recommendation {
 
     private long id;
-    private Reception reception;
+    private long reception;
     private String recommendation;
 
     public Recommendation() {
     }
 
-    public Recommendation(Reception reception, String recommendation) {
+    public Recommendation(long reception, String recommendation) {
+        this.reception = reception;
+        this.recommendation = recommendation;
+    }
+
+    public Recommendation(long id, long reception, String recommendation) {
+        this.id = id;
         this.reception = reception;
         this.recommendation = recommendation;
     }
@@ -23,11 +29,11 @@ public class Recommendation {
         this.id = id;
     }
 
-    public Reception getReception() {
+    public long getReception() {
         return reception;
     }
 
-    public void setReception(Reception reception) {
+    public void setReception(long reception) {
         this.reception = reception;
     }
 

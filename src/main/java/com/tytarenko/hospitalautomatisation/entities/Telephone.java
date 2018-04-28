@@ -3,12 +3,12 @@ package com.tytarenko.hospitalautomatisation.entities;
 public class Telephone<T> {
 
     private long telephone;
-    private T user;
+    private String user;
 
     public Telephone() {
     }
 
-    public Telephone(long telephone, T user) {
+    public Telephone(long telephone, String user) {
         this.telephone = telephone;
         this.user = user;
     }
@@ -21,11 +21,11 @@ public class Telephone<T> {
         this.telephone = telephone;
     }
 
-    public T getDoctor() {
+    public String getUser() {
         return user;
     }
 
-    public void setUser(T user) {
+    public void setUser(String user) {
         this.user = user;
     }
 }

@@ -24,9 +24,9 @@
     ${patient.birthdate}<br>
 
 
-    <a href="/docotor/all-patients/${patient.id}/recommendations">Recomendations</a>
-    <a href="/docotor/all-patients/${patient.id}/add_recommendation">Add recomendation</a>
-    <a href="/doctor/all_patients/${patient.id}/add_recipe">Add recipe</a>
+    <a href="/doctor/${doctor.passport}/all-patients/${patient.passport}/recommendations">Recomendations</a>
+    <a href="/doctor/${doctor.passport}/all-patients/${patient.passport}/add_recommendation">Add recomendation</a>
+    <a href="/doctor/${doctor.passport}/all_patients/${patient.passport}/add_recipe">Add recipe</a>
 
 </body>
 </html>

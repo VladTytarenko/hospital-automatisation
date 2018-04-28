@@ -1,16 +1,18 @@
 package com.tytarenko.hospitalautomatisation.entities;
 
 
+import java.sql.Date;
+
 public class Recipe {
 
     private long id;
-    private Reception reception;
+    private long reception;
     private String medicament;
 
     public Recipe() {
     }
 
-    public Recipe(long id, Reception reception, String medicament) {
+    public Recipe(long id, long reception, String medicament) {
         this.id = id;
         this.reception = reception;
         this.medicament = medicament;
@@ -24,20 +26,20 @@ public class Recipe {
         this.id = id;
     }
 
-    public Reception getReceptionId() {
-        return reception;
-    }
-
-    public void setReception(Reception reception) {
-        this.reception = reception;
-    }
-
     public String getMedicament() {
         return medicament;
     }
 
     public void setMedicament(String medicament) {
         this.medicament = medicament;
+    }
+
+    public long getReception() {
+        return reception;
+    }
+
+    public void setReception(long reception) {
+        this.reception = reception;
     }
 
 }

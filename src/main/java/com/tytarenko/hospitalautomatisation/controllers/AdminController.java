@@ -7,8 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.jws.WebParam;
-import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -52,9 +50,9 @@ public class AdminController {
     }
 
     @PostMapping("/all_patients/{id}/update")
-    public ModelAndView updatePatient(@PathVariable("id") long id,
+    public ModelAndView updatePatient(@PathVariable("id") String id,
                                       @ModelAttribute("patient") Patient patient) {
-        patientService.updatePatient(patient);
+        patientService.updatePatient(patient, id);
         return new ModelAndView("redirect:/admin/all_patients/" + id);
     }
 

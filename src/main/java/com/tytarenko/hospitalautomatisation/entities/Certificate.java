@@ -4,15 +4,15 @@ public class Certificate {
 
     private long certificateNumber;
     private String certificatName;
-    private Doctor doctor;
+    private String passport;
 
     public Certificate() {
     }
 
-    public Certificate(long certificateNumber, String certificatName, Doctor doctor) {
+    public Certificate(long certificateNumber, String certificatName, String passport) {
         this.certificateNumber = certificateNumber;
         this.certificatName = certificatName;
-        this.doctor = doctor;
+        this.passport = passport;
     }
 
     public long getCertificateNumber() {
@@ -31,11 +31,11 @@ public class Certificate {
         this.certificatName = certificatName;
     }
 
-    public Doctor getDoctor() {
-        return doctor;
+    public String getDoctor() {
+        return passport;
     }
 
-    public void setDoctor(Doctor doctor) {
-        this.doctor = doctor;
+    public void setDoctor(String passport) {
+        this.passport = passport;
     }
 }
