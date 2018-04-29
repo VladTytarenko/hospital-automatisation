@@ -6,7 +6,7 @@
 </head>
 <body>
 
-    <#list recipe-list as recipe>
+    <#list recipe_list as recipe>
         ${recipe.medicament}
     </#list>
 

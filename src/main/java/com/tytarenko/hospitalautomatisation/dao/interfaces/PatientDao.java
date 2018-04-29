@@ -7,7 +7,6 @@ import java.util.List;
 
 public interface PatientDao {
 
-    Patient getPatientById(long id);
     Patient getPatientByPassport(String passport);
     List<Patient> getAllPatient();
     List<Patient> getPatientsOfDoctor(String doctor);

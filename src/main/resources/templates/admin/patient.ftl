@@ -5,8 +5,6 @@
     <title>${patient.surname}</title>
 </head>
 <body>
-       Registration number:<br>
-       ${patient.id}<br>
        Surname:<br>
        ${patient.surname}<br>
        Name:<br>
@@ -24,7 +22,7 @@
 
 
        <a href="/admin/all_patients">To Patients List</a>
-       <a href="/admin/all_patients/${patient.id}/update">Update information</a>
-       <a href="/admin/all_patients/${patient.id}/delete">Delete patient</a>
+       <a href="/admin/all_patients/${patient.passport}/update">Update information</a>
+       <a href="/admin/all_patients/${patient.passport}/delete">Delete patient</a>
 </body>
 </html>

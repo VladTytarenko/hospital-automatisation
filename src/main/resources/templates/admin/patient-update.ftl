@@ -5,9 +5,7 @@
     <title>Admin</title>
 </head>
 <body>
-    <form name="patient" action="/admin/all_patients/${patient.id}/update" method="post">
-        <p>Registration number:</p>
-        <input title="Registration-number" type="number" name="id" value="${patient.id}" disabled/>
+    <form name="patient" action="/admin/all_patients/${patient.passport}/update" method="post">
         <p>Surname:</p>
         <input title="Surname" type="text" name="surname" value="${patient.surname}"/>
         <p>Name:</p>
@@ -21,7 +19,7 @@
         <p>Email:</p>
         <input title="Email" type="email" name="email" value="${patient.email}"/>
         <p>Birthdate:</p>
-        <input title="Birthdate" type="date" name="birthdate" value="${patient.birthdate}"/>
+        <input title="Birthdate" type="date" name="birthdate" value="${patient.birthdate}" readonly/>
         <p>Invalidity:</p>
         <input title="Invalidity" type="text" name="invalidity" value="${patient.invalidity}"/>
         <p>Insurance Company:</p>
@@ -29,9 +27,9 @@
         <p>Insurance Policy Type:</p>
         <input title="Insurance-policy-type" type="text" name="insuranceType" value="${patient.insuranceType}"/>
         <p>Insurance Policy Number:</p>
-        <input title="Insurance-policy-number" type="nuber" name="insuranceNumber" value="${patient.insuranceNumber}"/>
+        <input title="Insurance-policy-number" type="number" name="insuranceNumber" value="${patient.insuranceNumber}"/>
         <p>Registration date:</p>
-        <input title="Registration-date" type="date" name="registrationDate" value="${patient.registrationDate}"/><br>
+        <input title="Registration-date" type="text" name="registrationDate" value="${patient.registrationDate}" readonly/><br>
         <input type="submit" value="Submit">
     </form>
 </body>

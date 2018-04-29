@@ -1,15 +1,17 @@
 package com.tytarenko.hospitalautomatisation.dao;
 
 import com.tytarenko.hospitalautomatisation.dao.interfaces.TelephoneDao;
-import com.tytarenko.hospitalautomatisation.dao.mappers.TelephoneMapper;
+import com.tytarenko.hospitalautomatisation.dao.mappers.DoctorTelephoneMapper;
 import com.tytarenko.hospitalautomatisation.entities.Doctor;
 import com.tytarenko.hospitalautomatisation.entities.Telephone;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public class DoctorTelephoneDao implements TelephoneDao<Doctor> {
 
     @Autowired
@@ -17,30 +19,30 @@ public class DoctorTelephoneDao implements TelephoneDao<Doctor> {
 
     @Override
     public List<Telephone<Doctor>> getTelephone(String passport) {
-        return jdbcTemplate.query("SELECT * FROM telephone_doctor WHERE passport =: passport",
+        return jdbcTemplate.query("SELECT * FROM telephone_doctor WHERE series_number_passport_of_doctor =: passport",
                 new MapSqlParameterSource().addValue("passport", passport),
-                new TelephoneMapper<Doctor>());
+                new DoctorTelephoneMapper());
     }
 
     @Override
     public void addTelephone(Telephone<Doctor> telephone) {
-        jdbcTemplate.update("INSERT INTO telephone_doctor (telephone, passport) VALUE (:telephone, :passport)",
+        jdbcTemplate.update("INSERT INTO telephone_doctor (telephone, series_number_passport_of_doctor) VALUE (:telephone, :passport)",
                 new MapSqlParameterSource().addValue("telephone", telephone.getTelephone())
-                        .addValue("passport", telephone.getDoctor()));
+                        .addValue("passport", telephone.getUser()));
     }
 
     @Override
     public void update(Telephone<Doctor> telephone, String passport, String telephoneOld) {
         jdbcTemplate.update("UPDATE telephone_doctor SET telephone = :telephone," +
-                "passport = :passport WHERE passport := passportId AND telephone = :telephoneOld",
+                "series_number_passport_of_doctor = :passport WHERE series_number_passport_of_doctor := passportId AND telephone = :telephoneOld",
                 new MapSqlParameterSource().addValue("telephone", telephone.getTelephone())
-        .addValue("passport", telephone.getDoctor())
+        .addValue("passport", telephone.getUser())
         .addValue("passportId", passport).addValue("telephoneOld", telephoneOld));
     }
 
     @Override
     public void delete(String telephone) {
-        jdbcTemplate.update("DELETE FROM doctor_telephone WHERE telephone = :telephone",
+        jdbcTemplate.update("DELETE FROM telephone_doctor WHERE telephone = :telephone",
                 new MapSqlParameterSource().addValue("telephone", telephone));
     }
 }

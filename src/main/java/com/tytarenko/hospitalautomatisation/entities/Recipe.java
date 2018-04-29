@@ -1,8 +1,5 @@
 package com.tytarenko.hospitalautomatisation.entities;
 
-
-import java.sql.Date;
-
 public class Recipe {
 
     private long id;

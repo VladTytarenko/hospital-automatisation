@@ -3,7 +3,7 @@ package com.tytarenko.hospitalautomatisation.dao.interfaces;
 
 import java.util.List;
 
-public interface DaoInteface<T> {
+public interface DaoInterface<T> {
 
     List<T> get(String passport);
     List<T> getByReception(long id);

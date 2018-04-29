@@ -6,8 +6,6 @@
 </head>
 <body>
 
-    Registration number:<br>
-    ${patient.id}<br>
     Surname:<br>
     ${patient.surname}<br>
     Name:<br>
@@ -24,9 +22,9 @@
     ${patient.birthdate}<br>
 
 
-    <a href="/doctor/${doctor.passport}/all-patients/${patient.passport}/recommendations">Recomendations</a>
-    <a href="/doctor/${doctor.passport}/all-patients/${patient.passport}/add_recommendation">Add recomendation</a>
-    <a href="/doctor/${doctor.passport}/all_patients/${patient.passport}/add_recipe">Add recipe</a>
+    <a href="/doctor/${doctor.passport}/all_receptions/${reception.id}/recommendations">Recomendations</a>
+    <a href="/doctor/${doctor.passport}/all_receptions/${reception.id}/add_recommendation">Add recomendation</a>
+    <a href="/doctor/${doctor.passport}/all_receptions/${reception.id}/add_recipe">Add recipe</a>
 
 </body>
 </html>

@@ -4,9 +4,11 @@ import com.tytarenko.hospitalautomatisation.dao.interfaces.ReferalDao;
 import com.tytarenko.hospitalautomatisation.entities.Referal;
 import com.tytarenko.hospitalautomatisation.services.interfaces.ReferalService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class ReferalServiceImpl implements ReferalService {
 
     @Autowired

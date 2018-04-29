@@ -9,6 +9,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 
 @Repository
@@ -18,15 +19,8 @@ public class PatientDaoImpl implements PatientDao {
     private NamedParameterJdbcTemplate jdbcTemplate;
 
     @Override
-    public Patient getPatientById(long id) {
-        return jdbcTemplate.queryForObject("SELECT * FROM patient WHERE registration_number=:id",
-                new MapSqlParameterSource().addValue("id", id),
-                new PatientMapper());
-    }
-
-    @Override
     public Patient getPatientByPassport(String passport) {
-        return jdbcTemplate.queryForObject("SELECT P.registration_number," +
+        return jdbcTemplate.queryForObject("SELECT" +
                         " PP.passport," +
                         " PP.surname," +
                         " PP.name," +
@@ -48,7 +42,7 @@ public class PatientDaoImpl implements PatientDao {
 
     @Override
     public List<Patient> getAllPatient() {
-        return jdbcTemplate.query("SELECT P.registration_number," +
+        return jdbcTemplate.query("SELECT" +
                 " PP.passport," +
                 " PP.surname," +
                 " PP.name," +
@@ -68,7 +62,7 @@ public class PatientDaoImpl implements PatientDao {
 
     @Override
     public List<Patient> getPatientsOfDoctor(String passport) {
-        return jdbcTemplate.query("SELECT  PM.registration_number," +
+        return jdbcTemplate.query("SELECT" +
                         " PM.passport," +
                         " PP.surname," +
                         " PP.name," +
@@ -81,13 +75,13 @@ public class PatientDaoImpl implements PatientDao {
                         "        PM.insurance_company,\n" +
                         "        PM.insurance_type,\n" +
                         "        PM.insurance_policy_number\n" +
-                        "FROM (((SELECT patient_id\n" +
-                        "     FROM referal\n" +
-                        "     WHERE doctor_passport_to = :passport) AS P\n" +
+                        "FROM (((SELECT patient_passport\n" +
+                        "     FROM reception\n" +
+                        "     WHERE doctor_passport = :passport) AS P\n" +
                         "     JOIN\n" +
                         "\t patient_passport AS PP\n" +
                         "     ON\n" +
-                        "     P.patient_id = PP.passport) \n" +
+                        "     P.patient_passport = PP.passport) \n" +
                         "     JOIN \n" +
                         "     patient AS PM\n" +
                         "     ON \n" +
@@ -99,15 +93,15 @@ public class PatientDaoImpl implements PatientDao {
     @Override
     public void insetNewPatient(Patient patient) {
         jdbcTemplate.update("INSERT INTO patient_passport(passport, surname, name, patronymic)" +
-                "VALUES (:passport, :surname, :name, :patronymic",
+                "VALUES (:passport, :surname, :name, :patronymic)",
                 new MapSqlParameterSource().addValue("passport", patient.getPassport())
         .addValue("surname", patient.getSurname())
         .addValue("name", patient.getName())
         .addValue("patronymic", patient.getPatronymic()));
 
-        jdbcTemplate.update("INSERT INTO patient (passport," +
+        jdbcTemplate.update("INSERT INTO patient (passport, " +
                 "address, email, birthdate, registration_date, " +
-                "invalidity, insurance_company, insurance_policy_number, patientcol) VALUES (:passport, " +
+                "invalidity, insurance_company, insurance_policy_number, insurance_type) VALUES (:passport, " +
                 ":address, :email, :birthdate, :registration_date, " +
                 ":invalidity, :insurance_company, :insurance_policy_number, :insurance_type)",
                 new MapSqlParameterSource()
@@ -125,20 +119,20 @@ public class PatientDaoImpl implements PatientDao {
 
     @Override
     public void updatePatient(Patient patient, String passport) {
-        jdbcTemplate.update("UPDATE patient_passport SET passport := passport," +
-                "surname := surname, name := name, patronymic := pat WHERE passport := p",
+        jdbcTemplate.update("UPDATE patient_passport SET passport = :passport," +
+                "surname = :surname, name = :name, patronymic = :patronymic WHERE passport = :p",
                 new MapSqlParameterSource()
                         .addValue("passport", patient.getPassport())
                         .addValue("surname", patient.getSurname())
                         .addValue("name", patient.getName())
                         .addValue("patronymic", patient.getPatronymic())
-                .addValue("p", passport)
+                        .addValue("p", passport)
         );
 
         jdbcTemplate.update("UPDATE patient SET " +
-                "address := address, email := email, birthdate := birthdate, " +
-                "registration_date := rd, invalidity := inv, insurance_company := ic, " +
-                "insurance_type := t, insurance_policy_number := ipn WHERE passport = :p",
+                "address = :address, email = :email, birthdate = :birthdate, " +
+                "registration_date = :rd, invalidity = :inv, insurance_company = :ic, " +
+                "insurance_type = :t, insurance_policy_number = :ipn WHERE passport = :p",
                 new MapSqlParameterSource()
                         .addValue("address", patient.getAddress())
                         .addValue("email", patient.getEmail())
@@ -148,13 +142,13 @@ public class PatientDaoImpl implements PatientDao {
                         .addValue("ic", patient.getInsuranceCompany())
                         .addValue("t", patient.getInsuranceType())
                         .addValue("ipn", patient.getInsuranceNumber())
-                        .addValue("p", patient.getPassport())
+                        .addValue("p", passport)//patient.getPassport())
         );
     }
 
     @Override
     public void deletePatientByPassport(String passport) {
-        jdbcTemplate.update("DELETE FROM patient_passport WHERE passport=:passport",
+        jdbcTemplate.update("DELETE FROM patient_passport WHERE passport = :passport",
                 new MapSqlParameterSource().addValue("passport", passport));
 
     }

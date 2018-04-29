@@ -19,8 +19,8 @@ public class Doctor {
     public Doctor() {
     }
 
-    public Doctor(String passport, String surname,
-                  String name, String patronymic,
+    public Doctor(String surname,
+                  String name, String patronymic, String passport,
                   String password, Date birthdate,
                   String specialization, int experience,
                   String position, String degree) {

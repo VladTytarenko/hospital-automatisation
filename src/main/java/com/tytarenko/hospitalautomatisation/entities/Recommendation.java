@@ -1,6 +1,5 @@
 package com.tytarenko.hospitalautomatisation.entities;
 
-
 public class Recommendation {
 
     private long id;

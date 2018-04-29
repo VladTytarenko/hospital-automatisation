@@ -8,6 +8,7 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 
 @Repository
 public class DoctorDaoImpl implements DoctorDao {
@@ -16,8 +17,21 @@ public class DoctorDaoImpl implements DoctorDao {
     private NamedParameterJdbcTemplate jdbcTemplate;
 
     @Override
+    public List<Doctor> getAllDoctors() {
+        return jdbcTemplate.query("SELECT DP.passport, DP.surname, DP.name, DP.patronymic, DP.password, D.birthdate, D.specialization," +
+                " D.experience, D.position, D.degree" +
+                        " FROM" +
+                        " (SELECT * FROM doctor_passport) AS DP" +
+                        " JOIN" +
+                        " doctor AS D" +
+                        " ON" +
+                        " D.passport = DP.passport",
+                new DoctorMapper());
+    }
+
+    @Override
     public Doctor getByPassport(String passport) {
-        return jdbcTemplate.queryForObject("SELECT DP.passport, DP.surname, DP.name, DP.patronymic, D.birthdate, D.specialization," +
+        return jdbcTemplate.queryForObject("SELECT DP.passport, DP.surname, DP.name, DP.patronymic, DP.password, D.birthdate, D.specialization," +
                         " D.experience, D.position, D.degree" +
                         " FROM" +
                         " (SELECT * FROM doctor_passport WHERE passport = :passport) AS DP" +
@@ -31,13 +45,14 @@ public class DoctorDaoImpl implements DoctorDao {
 
     @Override
     public void addDoctor(Doctor doctor) {
-        jdbcTemplate.update("INSERT INTO doctor_passport(passport, surname, name, patronymic) VALUES (:passport," +
-                        " :surname, :name)",
+        jdbcTemplate.update("INSERT INTO doctor_passport(passport, surname, name, patronymic, password) VALUES (:passport," +
+                        " :surname, :name, :patronymic, :password)",
                 new MapSqlParameterSource()
         .addValue("passport", doctor.getPassport())
         .addValue("surname", doctor.getSurname())
         .addValue("name", doctor.getName())
-        .addValue("patronymic", doctor.getPatronymic()));
+        .addValue("patronymic", doctor.getPatronymic())
+        .addValue("password", doctor.getPassword()));
 
         jdbcTemplate.update("INSERT INTO doctor (passport, birthdate, experience, specialization, " +
                 "position, degree) VALUES (:passport, :birthdate, :experience, :specialization, " +
@@ -52,25 +67,25 @@ public class DoctorDaoImpl implements DoctorDao {
 
     @Override
     public void updateDoctor(Doctor doctor, String passport) {
-        jdbcTemplate.update("UPDATE doctor_passport SET passport = :passport, surname = :surname, name = :name, patronymic = :patronymic WHERE" +
+        jdbcTemplate.update("UPDATE doctor_passport SET passport = :passport, surname = :surname, name = :name, patronymic = :patronymic, password = :password WHERE" +
                         " passport = :pass",
                 new MapSqlParameterSource()
                         .addValue("passport", doctor.getPassport())
                         .addValue("surname", doctor.getSurname())
                         .addValue("name", doctor.getName())
                         .addValue("patronymic", doctor.getPatronymic())
+                        .addValue("password", doctor.getPassword())
         .addValue("pass", passport));
 
-        jdbcTemplate.update("UPDATE doctor SET passport = :passport, birthdate = :birthdate," +
+        jdbcTemplate.update("UPDATE doctor SET birthdate = :birthdate," +
                 " experience = :experience, specialization = :specialization, " +
                 "position = :position, degree = :degree WHERE passport = :pass", new MapSqlParameterSource()
-                .addValue("passport", doctor.getPassport())
                 .addValue("birthdate", doctor.getBirthdate())
                 .addValue("experience", doctor.getExperience())
                 .addValue("specialization", doctor.getSpecialization())
                 .addValue("position", doctor.getPosition())
                 .addValue("degree", doctor.getDegree())
-        .addValue("pass", passport));
+                .addValue("pass", passport));
     }
 
     @Override

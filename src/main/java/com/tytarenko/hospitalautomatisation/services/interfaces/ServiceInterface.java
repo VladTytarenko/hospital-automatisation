@@ -3,7 +3,7 @@ package com.tytarenko.hospitalautomatisation.services.interfaces;
 
 import java.util.List;
 
-public interface ServiceInteface<T> {
+public interface ServiceInterface<T> {
 
     List<T> get(String passport);
     List<T> getByReception(long id);

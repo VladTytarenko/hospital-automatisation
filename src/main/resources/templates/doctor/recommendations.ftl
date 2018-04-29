@@ -6,7 +6,7 @@
 </head>
 <body>
 
- <#list recommendation-list as recommendation>
+ <#list recommendations_list as recommendation>
      ${recommendation.recommendation}
  </#list>
 

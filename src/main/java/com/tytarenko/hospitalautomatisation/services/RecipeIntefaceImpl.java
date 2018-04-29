@@ -1,17 +1,19 @@
 package com.tytarenko.hospitalautomatisation.services;
 
 
-import com.tytarenko.hospitalautomatisation.dao.interfaces.DaoInteface;
+import com.tytarenko.hospitalautomatisation.dao.interfaces.DaoInterface;
 import com.tytarenko.hospitalautomatisation.entities.Recipe;
-import com.tytarenko.hospitalautomatisation.services.interfaces.ServiceInteface;
+import com.tytarenko.hospitalautomatisation.services.interfaces.ServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-public class RecipeIntefaceImpl implements ServiceInteface<Recipe> {
+@Service
+public class RecipeIntefaceImpl implements ServiceInterface<Recipe> {
 
     @Autowired
-    private DaoInteface<Recipe> recipeDao;
+    private DaoInterface<Recipe> recipeDao;
 
     @Override
     public List<Recipe> get(String passport) {

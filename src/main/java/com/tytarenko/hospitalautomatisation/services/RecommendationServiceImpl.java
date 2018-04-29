@@ -1,28 +1,31 @@
 package com.tytarenko.hospitalautomatisation.services;
 
+import com.tytarenko.hospitalautomatisation.dao.interfaces.DaoInterface;
 import com.tytarenko.hospitalautomatisation.entities.Recommendation;
-import com.tytarenko.hospitalautomatisation.services.interfaces.ServiceInteface;
+import com.tytarenko.hospitalautomatisation.services.interfaces.ServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-public class RecommendationServiceImpl implements ServiceInteface<Recommendation> {
+@Service
+public class RecommendationServiceImpl implements ServiceInterface<Recommendation> {
 
     @Autowired
-    private ServiceInteface<Recommendation> recommendationService;
+    private DaoInterface<Recommendation> recommendationDao;
 
     @Override
     public List<Recommendation> get(String passport) {
-        return recommendationService.get(passport);
+        return recommendationDao.get(passport);
     }
 
     @Override
     public List<Recommendation> getByReception(long id) {
-        return recommendationService.getByReception(id);
+        return recommendationDao.getByReception(id);
     }
 
     @Override
     public void add(Recommendation object) {
-        recommendationService.add(object);
+        recommendationDao.add(object);
     }
 }

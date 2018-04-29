@@ -1,6 +1,7 @@
 package com.tytarenko.hospitalautomatisation.dao;
 
 import com.tytarenko.hospitalautomatisation.dao.interfaces.ReceptionDao;
+import com.tytarenko.hospitalautomatisation.dao.mappers.PatientMapper;
 import com.tytarenko.hospitalautomatisation.dao.mappers.ReceptionMapper;
 import com.tytarenko.hospitalautomatisation.dao.mappers.ReferalMapper;
 import com.tytarenko.hospitalautomatisation.entities.Reception;
@@ -18,8 +19,22 @@ public class ReceptionDaoImpl implements ReceptionDao {
     private NamedParameterJdbcTemplate jdbcTemplate;
 
     @Override
+    public Reception getReceptionById(long id) {
+        return jdbcTemplate.queryForObject("SELECT * FROM reception WHERE id = :id",
+                new MapSqlParameterSource().addValue("id", id),
+                new ReceptionMapper());
+    }
+
+    @Override
     public List<Reception> getReceptionOfPatient(String passport) {
-        return jdbcTemplate.query("SELECT * FROM receprion WHERE patient_passport = :passport",
+        return jdbcTemplate.query("SELECT * FROM reception WHERE patient_passport = :passport",
+                new MapSqlParameterSource("passport", passport),
+                new ReceptionMapper());
+    }
+
+    @Override
+    public List<Reception> getReceptionOfDoctor(String passport) {
+        return jdbcTemplate.query("SELECT * FROM reception WHERE doctor_passport = :passport",
                 new MapSqlParameterSource("passport", passport),
                 new ReceptionMapper());
     }
@@ -27,7 +42,7 @@ public class ReceptionDaoImpl implements ReceptionDao {
     @Override
     public void addReception(Reception reception) {
         jdbcTemplate.query("INSERT INTO reception (doctor_passport, patient_passport, date, price) " +
-                "VALUES (:doc_pass, :patient:pass, :date, :price",
+                "VALUES (:doc_pass, :patient_pass, :date, :price",
                 new MapSqlParameterSource()
                         .addValue("doc_pass", reception.getDoctorPassport())
                         .addValue("patient_pass", reception.getPatientPassport())

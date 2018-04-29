@@ -5,9 +5,11 @@ import com.tytarenko.hospitalautomatisation.entities.Patient;
 import com.tytarenko.hospitalautomatisation.entities.Telephone;
 import com.tytarenko.hospitalautomatisation.services.interfaces.TelephoneService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class PatientTelephoneService implements TelephoneService<Patient> {
 
     @Autowired

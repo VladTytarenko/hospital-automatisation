@@ -12,7 +12,6 @@ public class PatientMapper implements RowMapper<Patient> {
     @Override
     public Patient mapRow(ResultSet resultSet, int i) throws SQLException {
         return new Patient(
-        resultSet.getLong("registration_number"),
         resultSet.getString("passport"),
         resultSet.getString("surname"),
         resultSet.getString("name"),

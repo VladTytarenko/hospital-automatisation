@@ -4,9 +4,11 @@ import com.tytarenko.hospitalautomatisation.dao.interfaces.TelephoneDao;
 import com.tytarenko.hospitalautomatisation.entities.Doctor;
 import com.tytarenko.hospitalautomatisation.entities.Telephone;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class DoctorTelephoneService implements TelephoneDao<Doctor> {
 
     @Autowired
