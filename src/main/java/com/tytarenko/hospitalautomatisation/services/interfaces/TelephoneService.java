@@ -8,7 +8,7 @@ public interface TelephoneService<T> {
 
     List<Telephone<T>> getTelephone(String passport);
     void addTelephone(Telephone<T> telephone);
-    void update(Telephone<T> telephone, String passport, String telephoneOld);
-    void delete(String telephone);
+    void update(long telephone, long telephoneOld);
+    void delete(long telephone);
 
 }

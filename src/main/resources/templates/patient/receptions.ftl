@@ -7,9 +7,7 @@
 <body>
 
     <#list receptions_list as reception>
-        <tr>
-            <td><a href="/doctor/${doctor.passport}/all_receptions/${reception.id}">${reception.date}</td>
-        </tr>
+        ${reception.date}
     </#list>
 
 </body>

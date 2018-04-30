@@ -26,12 +26,12 @@ public class PatientTelephoneService implements TelephoneService<Patient> {
     }
 
     @Override
-    public void update(Telephone<Patient> telephone, String passport, String telephoneOld) {
-        patientTelephoneDao.update(telephone, passport, telephoneOld);
+    public void update(long telephone, long telephoneOld) {
+        patientTelephoneDao.update(telephone, telephoneOld);
     }
 
     @Override
-    public void delete(String telephone) {
+    public void delete(long telephone) {
         patientTelephoneDao.delete(telephone);
     }
 }

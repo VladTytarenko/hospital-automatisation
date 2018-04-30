@@ -11,7 +11,7 @@ public class RecipeMapper implements RowMapper<Recipe> {
     @Override
     public Recipe mapRow(ResultSet resultSet, int i) throws SQLException {
         return new Recipe(resultSet.getLong("id"),
-                resultSet.getLong("reception"),
+                resultSet.getLong("reception_id"),
                 resultSet.getString("medicament"));
     }
 

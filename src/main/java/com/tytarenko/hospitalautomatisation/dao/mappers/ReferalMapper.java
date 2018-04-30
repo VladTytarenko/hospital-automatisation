@@ -13,6 +13,6 @@ public class ReferalMapper implements RowMapper<Referal> {
         return new Referal(resultSet.getLong("id"),
                 resultSet.getString("patient_id"),
                 resultSet.getString("doctor_passport_from"),
-                resultSet.getString("doctor_passport_to"));
+                resultSet.getInt("specialization"));
     }
 }

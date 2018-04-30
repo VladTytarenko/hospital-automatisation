@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Cabinet</title>
 </head>
 <body>
 
@@ -24,9 +24,11 @@
     ${patient.invalidity}<br>
 
 
-    <a href="/doctor/${doctor.passport}/all_receptions/${reception.id}/recommendations">Recomendations</a>
-    <a href="/doctor/${doctor.passport}/all_receptions/${reception.id}/add_recommendation">Add recomendation</a>
-    <a href="/doctor/${doctor.passport}/all_receptions/${reception.id}/add_recipe">Add recipe</a>
+    <a href="/patient/${patient.passport}/recommendations">Recomendations</a>
+    <a href="/patient/${patient.passport}/recipes">Recipes</a>
+    <a href="/patient/${patient.passport}/referals">Referals</a>
+    <a href="/patient/${patient.passport}/receptions">Receptions</a>
+    <a href="/patient/${patient.passport}/update">Update</a>
 
 </body>
 </html>

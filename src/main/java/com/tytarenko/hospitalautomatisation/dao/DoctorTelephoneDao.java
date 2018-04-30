@@ -32,16 +32,15 @@ public class DoctorTelephoneDao implements TelephoneDao<Doctor> {
     }
 
     @Override
-    public void update(Telephone<Doctor> telephone, String passport, String telephoneOld) {
+    public void update(long telephone, long telephoneOld) {
         jdbcTemplate.update("UPDATE telephone_doctor SET telephone = :telephone," +
-                "series_number_passport_of_doctor = :passport WHERE series_number_passport_of_doctor := passportId AND telephone = :telephoneOld",
-                new MapSqlParameterSource().addValue("telephone", telephone.getTelephone())
-        .addValue("passport", telephone.getUser())
-        .addValue("passportId", passport).addValue("telephoneOld", telephoneOld));
+                " WHERE telephone = :telephoneOld",
+                new MapSqlParameterSource().addValue("telephone", telephone)
+       .addValue("telephoneOld", telephoneOld));
     }
 
     @Override
-    public void delete(String telephone) {
+    public void delete(long telephone) {
         jdbcTemplate.update("DELETE FROM telephone_doctor WHERE telephone = :telephone",
                 new MapSqlParameterSource().addValue("telephone", telephone));
     }

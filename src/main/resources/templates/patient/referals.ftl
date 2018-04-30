@@ -6,9 +6,9 @@
 </head>
 <body>
 
- <#list recommendations_list as recommendation>
-     ${recommendation.recommendation}  ${recommendation.id}<br>
- </#list>
+    <#list doctor_list_list as referal>
+        ${referal.specialization}
+    </#list>
 
 </body>
 </html>

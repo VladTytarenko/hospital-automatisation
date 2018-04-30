@@ -20,6 +20,16 @@ public class DoctorServiceImpl implements DoctorService {
     }
 
     @Override
+    public List<Doctor> getBySpecialization(long id) {
+        return doctorDao.getBySpecialization(id);
+    }
+
+    @Override
+    public List<Doctor> getFamilyDoctors() {
+        return doctorDao.getFamilyDoctors();
+    }
+
+    @Override
     public Doctor getByPassport(String passport) {
         return doctorDao.getByPassport(passport);
     }

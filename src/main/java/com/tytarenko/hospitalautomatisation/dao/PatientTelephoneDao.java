@@ -34,17 +34,16 @@ public class PatientTelephoneDao implements TelephoneDao<Patient> {
     }
 
     @Override
-    public void update(Telephone<Patient> telephone, String passport, String telephoneOld) {
-        jdbcTemplate.update("UPDATE telephone_patient SET passport = :passport, telephone = :telephone" +
-                "WHERE telephone = :telephoneOld",
-                new MapSqlParameterSource().addValue("telephone", telephone.getTelephone())
-        .addValue("passport", telephone.getUser())
+    public void update(long telephone, long telephoneOld) {
+        jdbcTemplate.update("UPDATE telephone_patient SET telephone = :telephone" +
+                " WHERE telephone = :telephoneOld",
+                new MapSqlParameterSource().addValue("telephone", telephone)
         .addValue("telephoneOld", telephoneOld));
 
     }
 
     @Override
-    public void delete(String telephone) {
+    public void delete(long telephone) {
         jdbcTemplate.update("DELETE FROM telephone_patient WHERE telephone = :telephone",
                 new MapSqlParameterSource().addValue("telephone", telephone));
     }

@@ -19,7 +19,7 @@ public class RecipeDao implements DaoInterface<Recipe> {
 
     @Override
     public List<Recipe> get(String passport) {
-        return jdbcTemplate.query("SELECT R.id, R.medicament, REC.patient_passport\n" +
+        return jdbcTemplate.query("SELECT R.id, R.medicament, R.reception_id\n" +
                 "FROM recipe AS R\n" +
                 "     INNER JOIN\n" +
                 "     (SELECT id, patient_passport FROM reception WHERE patient_passport = :passport) AS REC\n" +

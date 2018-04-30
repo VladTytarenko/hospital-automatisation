@@ -11,7 +11,7 @@ public class Doctor {
     private String patronymic;
     private String password;
     private Date birthdate;
-    private String specialization;
+    private int specialization;
     private int experience;
     private String position;
     private String degree;
@@ -22,7 +22,7 @@ public class Doctor {
     public Doctor(String surname,
                   String name, String patronymic, String passport,
                   String password, Date birthdate,
-                  String specialization, int experience,
+                  int specialization, int experience,
                   String position, String degree) {
         this.passport = passport;
         this.surname = surname;
@@ -84,11 +84,11 @@ public class Doctor {
         this.birthdate = birthdate;
     }
 
-    public String getSpecialization() {
+    public int getSpecialization() {
         return specialization;
     }
 
-    public void setSpecialization(String specialization) {
+    public void setSpecialization(int specialization) {
         this.specialization = specialization;
     }
 

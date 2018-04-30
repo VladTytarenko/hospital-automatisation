@@ -18,7 +18,7 @@ public class RecommendationDao implements DaoInterface<Recommendation> {
 
     @Override
     public List<Recommendation> get(String passport) {
-        return jdbcTemplate.query("SELECT R.id, R.recommendation, REC.patient_passport\n" +
+        return jdbcTemplate.query("SELECT R.id, R.recommendation, R.reception_id\n" +
                         "FROM recommendation AS R\n" +
                         "     INNER JOIN\n" +
                         "     (SELECT id, patient_passport FROM reception WHERE patient_passport = :passport) AS REC\n" +

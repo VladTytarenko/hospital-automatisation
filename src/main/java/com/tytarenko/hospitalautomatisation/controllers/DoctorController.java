@@ -1,12 +1,7 @@
 package com.tytarenko.hospitalautomatisation.controllers;
 
-import com.tytarenko.hospitalautomatisation.entities.Reception;
-import com.tytarenko.hospitalautomatisation.entities.Recipe;
-import com.tytarenko.hospitalautomatisation.entities.Recommendation;
-import com.tytarenko.hospitalautomatisation.services.interfaces.DoctorService;
-import com.tytarenko.hospitalautomatisation.services.interfaces.PatientService;
-import com.tytarenko.hospitalautomatisation.services.interfaces.ReceptionService;
-import com.tytarenko.hospitalautomatisation.services.interfaces.ServiceInterface;
+import com.tytarenko.hospitalautomatisation.entities.*;
+import com.tytarenko.hospitalautomatisation.services.interfaces.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -33,6 +28,12 @@ public class DoctorController {
 
     @Autowired
     private ServiceInterface<Recipe> recipeService;
+
+    @Autowired
+    private ReferalService referalSerivice;
+
+    @Autowired
+    private SpecializationService specializationService;
 
     @GetMapping("/{passport}")
     public ModelAndView doctor(@PathVariable("passport") String passport) {
@@ -62,11 +63,11 @@ public class DoctorController {
 
     @GetMapping("/{passport}/all_receptions/{reception_id}/recommendations")
     public ModelAndView getRecomendation(@PathVariable("reception_id") long id,
-                                         @PathVariable("passport") String docPassport) {
+                                         @PathVariable("passport") String passport) {
         Reception reception = receptionService.getReceptionById(id);
         Map<String, Object> model = new HashMap<>();
         model.put("recommendations_list", recommendationService.get(reception.getPatientPassport()));
-        model.put("doctor", doctorService.getByPassport(docPassport));
+        model.put("doctor", doctorService.getByPassport(passport));
         return new ModelAndView("doctor/recommendations", model);
     }
 
@@ -75,24 +76,25 @@ public class DoctorController {
                                          @PathVariable("reception_id") long id) {
         Map<String, Object> model = new HashMap<>();
         model.put("doctor", doctorService.getByPassport(passport));
-        model.put("reception", receptionService.getReceptionById(id));
-        return new ModelAndView("doctor/add-recommendation");
+        model.put("reception", id);//receptionService.getReceptionById(id));
+        return new ModelAndView("doctor/add-recommendation", model);
     }
 
     @PostMapping("/{passport}/all_receptions/{reception_id}/add_recommendation")
     public ModelAndView addRecomendation(@PathVariable("passport") String passport,
                                          @PathVariable("reception_id") long id,
                                          @ModelAttribute("recommendation") Recommendation recommendation) {
+        System.out.println(recommendation.getReception());
         recommendationService.add(recommendation);
         return new ModelAndView("redirect:/doctor/" + passport + "/all_receptions/" + id + "/recommendations");
     }
 
-    @GetMapping("/{passport}/all_recomendations/{id}/recipes")
+    @GetMapping("/{passport}/all_receptions/{reception_id}/recipes")
     public ModelAndView getRecipes(@PathVariable("passport") String passport,
                                    @PathVariable("reception_id") long id) {
         Map<String, Object> model = new HashMap<>();
-        model.put("recipes", recipeService.getByReception(id));
-        return new ModelAndView("recipes", model);
+        model.put("recipes_list", recipeService.getByReception(id));
+        return new ModelAndView("doctor/recipes", model);
     }
 
 
@@ -101,7 +103,7 @@ public class DoctorController {
                                   @PathVariable("reception_id") long id) {
         Map<String, Object> model = new HashMap<>();
         model.put("doctor", doctorService.getByPassport(passport));
-        model.put("reception", receptionService.getReceptionById(id));
+        model.put("reception", id);
         return new ModelAndView("doctor/add-recipe", model);
     }
 
@@ -110,6 +112,26 @@ public class DoctorController {
                                   @PathVariable("reception_id") long id,
                                   @ModelAttribute("recipe") Recipe recipe) {
         recipeService.add(recipe);
-        return new ModelAndView("redirect:/doctor/" + passport + "/all_recomendations/" + id + "/recipes");
+        return new ModelAndView("redirect:/doctor/" + passport + "/all_receptions/" + id + "/recipes");
+    }
+
+    @GetMapping("/{passport}/all_receptions/{reception_id}/add_referal")
+    public ModelAndView addReferal(@PathVariable("passport") String passport,
+                                   @PathVariable("reception_id") long id) {
+        Map<String, Object> model = new HashMap<>();
+        model.put("doctor", passport);
+        model.put("reception", id);
+        model.put("specialization_list", specializationService.getAllSpecialization());
+        return new ModelAndView("doctor/add-referal", model);
+    }
+
+    @PostMapping("/{passport}/all_receptions/{reception_id}/add_referal")
+    public ModelAndView addReferal(@PathVariable("passport") String passport,
+                                   @PathVariable("reception_id") long id,
+                                   @ModelAttribute("specialization") int n) {
+        referalSerivice.addReferal(new Referal(receptionService.getReceptionById(id).getPatientPassport(),
+        passport, n));
+        System.out.println("Success");
+        return new ModelAndView("doctor/referal-success");
     }
 }

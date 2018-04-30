@@ -25,12 +25,12 @@ public class DoctorTelephoneService implements TelephoneDao<Doctor> {
     }
 
     @Override
-    public void update(Telephone<Doctor> telephone, String passport, String telephoneOld) {
-        doctorTelephoneService.update(telephone, passport, telephoneOld);
+    public void update(long telephone, long telephoneOld) {
+        doctorTelephoneService.update(telephone, telephoneOld);
     }
 
     @Override
-    public void delete(String telephone) {
+    public void delete(long telephone) {
         doctorTelephoneService.delete(telephone);
     }
 }

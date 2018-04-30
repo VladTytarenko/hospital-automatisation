@@ -17,7 +17,7 @@ public class DoctorMapper implements RowMapper<Doctor> {
                           resultSet.getString("passport"),
                           resultSet.getString("password"),
                           resultSet.getDate("birthdate"),
-                          resultSet.getString("specialization"),
+                          resultSet.getInt("specialization"),
                           resultSet.getInt("experience"),
                           resultSet.getString("position"),
                           resultSet.getString("degree"));

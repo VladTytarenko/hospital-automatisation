@@ -6,9 +6,9 @@
 </head>
 <body>
 
- <#list recommendations_list as recommendation>
-     ${recommendation.recommendation}  ${recommendation.id}<br>
- </#list>
+    <#list recommendations_list as recommendation>
+        ${recommendation.recommendation}
+    </#list>
 
 </body>
 </html>

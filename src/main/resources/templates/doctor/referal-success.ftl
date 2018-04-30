@@ -6,9 +6,7 @@
 </head>
 <body>
 
- <#list recommendations_list as recommendation>
-     ${recommendation.recommendation}  ${recommendation.id}<br>
- </#list>
+    Направлення створено успішно!
 
 </body>
 </html>

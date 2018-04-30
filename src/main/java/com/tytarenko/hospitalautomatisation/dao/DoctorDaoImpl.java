@@ -30,6 +30,33 @@ public class DoctorDaoImpl implements DoctorDao {
     }
 
     @Override
+    public List<Doctor> getBySpecialization(long id) {
+        return jdbcTemplate.query("SELECT DP.passport, DP.surname, DP.name, DP.patronymic, DP.password, D.birthdate, D.specialization,"  +
+                                " D.experience, D.position, D.degree" +
+                " FROM" +
+                " (SELECT * FROM doctor_passport) AS DP" +
+                " JOIN" +
+                " (SELECT * FROM doctor WHERE specialization = :s) AS D" +
+                " ON" +
+                " D.passport = DP.passport",
+                new MapSqlParameterSource().addValue("s", id),
+                new DoctorMapper());
+    }
+
+    @Override
+    public List<Doctor> getFamilyDoctors() {
+        return jdbcTemplate.query("SELECT DP.passport, DP.surname, DP.name, DP.patronymic, DP.password, D.birthdate, D.specialization,"  +
+                        " D.experience, D.position, D.degree" +
+                        " FROM" +
+                        " (SELECT * FROM doctor_passport) AS DP" +
+                        " JOIN" +
+                        " (SELECT * FROM doctor WHERE specialization = 1) AS D" +
+                        " ON" +
+                        " D.passport = DP.passport",
+                new DoctorMapper());
+    }
+
+    @Override
     public Doctor getByPassport(String passport) {
         return jdbcTemplate.queryForObject("SELECT DP.passport, DP.surname, DP.name, DP.patronymic, DP.password, D.birthdate, D.specialization," +
                         " D.experience, D.position, D.degree" +
@@ -92,6 +119,6 @@ public class DoctorDaoImpl implements DoctorDao {
     public void deleteDoctorByPassport(String passport) {
         jdbcTemplate.update("DELETE FROM doctor_passport WHERE passport = :passport",
                 new MapSqlParameterSource("passport", passport));
-
     }
+
 }

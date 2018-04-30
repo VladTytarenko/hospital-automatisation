@@ -19,10 +19,11 @@ public class ReferalDaoImpl implements ReferalDao {
 
     @Override
     public void addReferal(Referal referal) {
-        jdbcTemplate.update("INSERT INTO referal (patient_id, doctor_passport_from, doctor_passport_to) VALUES (:patient_id, :doctor_from, doctor_to)",
-                new MapSqlParameterSource().addValue("patient_id", referal.getPatient())
-        .addValue("doctor_from", referal.getDoctorFrom())
-        .addValue("doctor_to", referal.getDocotrTo()));
+        jdbcTemplate.update("INSERT INTO referal (patient_id, doctor_passport_from, specialization) VALUES (:patient_id, :doctor_from, :specialization)",
+                new MapSqlParameterSource()
+                        .addValue("patient_id", referal.getPatient())
+                        .addValue("doctor_from", referal.getDoctorFrom())
+                        .addValue("specialization", referal.getSpecialization()));
     }
 
     @Override
